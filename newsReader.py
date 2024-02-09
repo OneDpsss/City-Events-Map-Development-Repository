@@ -5,6 +5,8 @@ from models import News
 from django.http import JsonResponse
 import psycopg2
 
+# Сделаю ветку с django которая не работает друзья
+
 # conn = psycopg2.connect(host="localhost", dbname="nnru_reader", user="postgres", password="postgres")
 # cur = conn.cursor()
 
@@ -63,8 +65,8 @@ def pass_news(id, title, description, date, place, url, img):
     print(response.json())
 
 def rbc():
-    url = 'https://nn.rbc.ru/nn/'
-    data = check_response(url)
+    site_url = 'https://nn.rbc.ru/nn/'
+    data = check_response(site_url)
     if data is None:
         return
 
@@ -76,14 +78,14 @@ def rbc():
         img = get_after_find(article, 'img', 'src')
 
         print(title, '\n', date, '\n', url, '\n', img, '\n\n\n')
-        pass_news(0, title, '', date, '', url, img)
+        #pass_news(0, title, '', date, '', url, img)
 
 
 
 
 def nnru():
-    url = 'https://www.nn.ru/text/'
-    data = check_response(url)
+    site_url = 'https://www.nn.ru/text/'
+    data = check_response(site_url)
     if data is None:
         return
 
@@ -92,12 +94,17 @@ def nnru():
         tag = article.find('h2')
         if tag:
             title = tag.a['title']
+
         date = get_after_find(article, 'time', 'datetime')
         url = 'https://www.nn.ru/' + article.a['href']
         img = get_after_find(article, 'img', 'src')
 
+        response = requests.get(url)
+        news_data = BeautifulSoup(response.text, 'html.parser')
+        text = news_data.find('b', {'class': '_'}).text
+
         print(title, '\n', date, '\n', url, '\n', img, '\n\n\n')
-        pass_news(0, title, '', date, '', url, img)
+        #pass_news(0, title, '', date, '', url, img)
 
 
 
