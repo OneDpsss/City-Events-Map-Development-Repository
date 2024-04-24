@@ -4,16 +4,17 @@ import base64
 import requests
 from PIL import Image
 from io import BytesIO
-import time
+
 import json
 from datetime import datetime
 from bs4 import BeautifulSoup
 from internal.function import response_to_server, filter_func, SummarizeAiFunc
 
 import os
+
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "Django_config.settings")
 
-news_limit = 1
+news_limit = 3
 
 
 def get_after_find(article, par1, par2):
@@ -36,7 +37,6 @@ def check_response(url):
 
 def download_image(url, save_path):
     response = requests.get(url)
-
     if response.status_code == 200:
         image_content = response.content
         image = Image.open(BytesIO(image_content))
@@ -46,24 +46,28 @@ def download_image(url, save_path):
         print("Error downloading image")
         return None
 
+
 # add existence checker and delete news after 7 days
 
-async def send_json(img, text, url):
-    today = datetime.today()
-    date = today.strftime('%Y-%m-%d')
-
-    img_path = "images/" + os.path.basename(img)
-    download_image(img, img_path)
-    with open(img_path, "rb") as file:
+async def send_json(img, post, url):
+    try:
+        data = json.loads(post)
+    except json.JSONDecoder as e:
+        print("err")
+        return
+    time = datetime.now().strftime("%Y-%m-%d")
+    data['news_date'] = time
+    time = datetime.now().strftime("%d-%m-%Y%H-%M-%S-%f")
+    path = f"images/img+{time}.jpg"
+    download_image(img, path)
+    with open(path, "rb") as file:
         image_data = file.read()
         img = base64.b64encode(image_data).decode('utf-8')
-
-    post = await SummarizeAiFunc(text)
-    data = json.loads(post)
     data['url'] = url
     data['img'] = img
-    data['news_date'] = date
-    response_to_server(data)
+    data['news_date'] = time
+    # response_to_server(data)
+    print(data['title'])
 
 
 async def nnru():
@@ -96,8 +100,11 @@ async def nnru():
         text = title
         if news_data.find('div', {'class': 'qQq9J'}) is not None:
             text += ". " + news_data.find('div', {'class': 'qQq9J'}).get_text(strip=True)
+        if text == "":
+            return
 
-        await send_json(img, text, url)
+        post = await SummarizeAiFunc(text)
+        await send_json(img, post, url)
 
 
 async def rbc():
@@ -106,18 +113,21 @@ async def rbc():
     if data is None:
         return
 
-    for article in data.find_all('div', {'class': 'item js-rm-central-column-item item_image-mob js-category-item'})[:news_limit]:
+    for article in data.find_all('div', {'class': 'item js-rm-central-column-item item_image-mob js-category-item'})[
+                   :news_limit]:
         title = article.find('span', {'class': 'normal-wrap'}).text
         url = article.find('a', {'class': 'item__link rm-cm-item-link js-rm-central-column-item-link'}).get('href')
         img = get_after_find(article, 'img', 'src')
 
         response = requests.get(url)
         news_data = BeautifulSoup(response.text, 'html.parser')
-        text = ''
+        text = ""
         if news_data.find('div', {'class': 'article__text__overview'}) is not None:
             text = news_data.find('div', {'class': 'article__text__overview'}).get_text(strip=True)
-
-        await send_json(img, text, url)
+        if text == "":
+            return
+        post = await SummarizeAiFunc(text)
+        await send_json(img, post, url)
 
 
 def run():
