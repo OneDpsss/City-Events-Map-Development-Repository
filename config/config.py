@@ -9,7 +9,7 @@ prompt = """{ in JSON format in Russian language "title": "Describe the event ti
 excluding additional details.", "address": "Specify the event location in the following format: City (if possible), 
 Street (if possible), Building (if possible). Note that all events take place in the Nizhny Novgorod region. Do not 
 separate into separate entities.", "description": "Rephrase the information to provide a more precise context and 
-avoid unnecessary emotional inserts.", "priority": { where 3 - "High importance: Events that significantly 
+avoid unnecessary emotional inserts.",  "priority": { where 3 - "High importance: Events that significantly 
 affect all or most of the city's residents. National or global news related to the city or its residents. Major 
 changes in infrastructure, politics, economy, or public life of the city.", 2 -  "Medium importance: Events affecting 
 specific areas or groups of city residents. Important local events such as cultural events, festivals, 

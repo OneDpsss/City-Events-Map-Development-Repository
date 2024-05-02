@@ -7,7 +7,7 @@ from datetime import datetime
 import time
 from dateutil import parser
 from bs4 import BeautifulSoup
-from internal.function import check_response, download_image, get_after_find
+from internal.function import check_response, get_after_find
 
 event_limit = 5
 
@@ -16,7 +16,7 @@ event_limit = 5
 auth = HTTPBasicAuth('admin', 'admin')
 
 
-async def send_json(title, date, address, url, img):
+async def send_json(title, date, address, url, img,logger):
     data = {}
     data['title'] = title
     data['event_date'] = date
@@ -24,6 +24,7 @@ async def send_json(title, date, address, url, img):
     data['url'] = url
     data['img'] = img
     print(data)
+    logger.info(f"{data["url"]}")
     response_to_server(data)
 
 
@@ -31,7 +32,7 @@ def response_to_server(post):
     response_post = requests.post(url='https://api.in-map.ru/api/events/', json=post, auth=auth)
     print("POST-запрос:", response_post.json())
 
-async def kassir():
+async def kassir(logger):
     prev_data = None
     #while True:
     site_url = 'https://nn.kassir.ru/selection/luchshee-v-nijnem-novgorode'
@@ -47,7 +48,7 @@ async def kassir():
             date = parser.parse(date).strftime("%Y-%m-%d %H:%M")
 
             #print(title, '\n', date, '\n', address, '\n', url, '\n', img, '\n\n\n')
-            await send_json(title, date, address, url, img)
+            await send_json(title, date, address, url, img,logger)
 
 
 def run_events():

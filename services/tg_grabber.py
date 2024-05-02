@@ -48,8 +48,8 @@ async def telegram_grabber(session, api_id, api_hash,logger, loop=None, tg_chann
             return
         # Отправка данных на сервер
         logger.info(f"{json.dumps(data["url"])}")
-        print(data)
-        # response_to_server(data)
+        print(data["title"])
+        response_to_server(data)
         # send_message_func(data)
 
     # Запуск клиента Telegram

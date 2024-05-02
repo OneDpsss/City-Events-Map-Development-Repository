@@ -2,7 +2,6 @@ import requests
 from shuttleai import ShuttleAsyncClient
 from requests.auth import HTTPBasicAuth
 from config.config import SHUTTLE_KEY, prompt
-from PIL import Image
 from io import BytesIO
 from bs4 import BeautifulSoup
 
@@ -63,5 +62,4 @@ auth = HTTPBasicAuth('admin', 'admin')
 
 def response_to_server(post):
     response_post = requests.post(url='https://api.in-map.ru/api/news/', json=post, auth=auth)
-    print("POST-запрос:", response_post.json())
-
+    print("POST-запрос:", response_post.status_code)

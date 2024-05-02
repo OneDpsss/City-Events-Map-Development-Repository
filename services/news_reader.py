@@ -24,7 +24,7 @@ def get_after_find(article, par1, par2):
 #add existence checker and delete news after 7 days
 
 
-async def send_json(img, post, url):
+async def send_json(img, post, url,logger):
     try:
         data = json.loads(post)
     except json.JSONDecoder as e:
@@ -35,10 +35,11 @@ async def send_json(img, post, url):
     data['url'] = url
     data['img'] = img
     data['news_date'] = time
+    logger.info(f"{data["url"]}")
     response_to_server(data)
 
 
-async def nnru():
+async def nnru(logger):
     prev_data = None
     while True:
         site_url = 'https://www.nn.ru/text/'
@@ -72,12 +73,12 @@ async def nnru():
                     return
 
                 post = await SummarizeAiFunc(text)
-                await send_json(img, post, url)
+                await send_json(img, post, url,logger)
                 prev_data = data
                 time.sleep(600)
 
 
-async def rbc():
+async def rbc(logger):
     prev_data = None
     while True:
         site_url = 'https://nn.rbc.ru/nn/'
@@ -97,7 +98,7 @@ async def rbc():
                 if text == "":
                     return
                 post = await SummarizeAiFunc(text)
-                await send_json(img, post, url)
+                await send_json(img, post, url,logger)
                 prev_data = data
                 time.sleep(600)
 
