@@ -58,19 +58,8 @@ def check_response(url):
         return None
 
 
-def download_image(url, save_path):
-    response = requests.get(url)
-    if response.status_code == 200:
-        image_content = response.content
-        image = Image.open(BytesIO(image_content))
-        image.save(save_path)
-        return image
-    else:
-        print("Error downloading image")
-        return None
-
-
 auth = HTTPBasicAuth('admin', 'admin')
+
 
 def response_to_server(post):
     response_post = requests.post(url='https://api.in-map.ru/api/news/', json=post, auth=auth)
