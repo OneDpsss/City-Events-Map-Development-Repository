@@ -79,7 +79,7 @@ def check_response(url):
         return None
 
 
-auth = HTTPBasicAuth('admin', 'admin')
+auth = HTTPBasicAuth('', '')
 
 
 def response_to_server(post):
