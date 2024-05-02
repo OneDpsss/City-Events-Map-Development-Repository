@@ -7,7 +7,7 @@ from datetime import datetime
 import time
 from dateutil import parser
 from bs4 import BeautifulSoup
-from internal.function import check_response, download_image, get_after_find
+from internal.function import check_response, get_after_find
 
 event_limit = 5
 
