@@ -1,21 +1,17 @@
 import asyncio
 import base64
 
-import requests
-from PIL import Image
-from io import BytesIO
-
 import json
 from datetime import datetime
 import time
 from bs4 import BeautifulSoup
-from internal.function import response_to_server, filter_func, SummarizeAiFunc
+from internal.function import *
 
 import os
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "Django_config.settings")
 
-news_limit = 1
+news_limit = 5
 
 
 def get_after_find(article, par1, par2):
@@ -25,32 +21,10 @@ def get_after_find(article, par1, par2):
     else:
         return None
 
-
-def check_response(url):
-    response = requests.get(url)
-    if response.status_code == 200:
-        html = response.text
-        return BeautifulSoup(html, 'html.parser')
-    else:
-        print('Failed to send request. Status code:', response.status_code)
-        return None
-
-
-def download_image(url, save_path):
-    response = requests.get(url)
-    if response.status_code == 200:
-        image_content = response.content
-        image = Image.open(BytesIO(image_content))
-        image.save(save_path)
-        return image
-    else:
-        print("Error downloading image")
-        return None
-
-
 #add existence checker and delete news after 7 days
 
-async def send_json(img, post, url):
+
+async def send_json(img, post, url,logger):
     try:
         data = json.loads(post)
     except json.JSONDecoder as e:
@@ -58,19 +32,14 @@ async def send_json(img, post, url):
         return
     time = datetime.now().strftime("%Y-%m-%d")
     data['news_date'] = time
-    time = datetime.now().strftime("%d-%m-%Y%H-%M-%S-%f")
-    path = f"images/img+{time}.jpg"
-    download_image(img, path)
-    with open(path, "rb") as file:
-        image_data = file.read()
-        img = base64.b64encode(image_data).decode('utf-8')
     data['url'] = url
     data['img'] = img
     data['news_date'] = time
+    logger.info(f"{data["url"]}")
     response_to_server(data)
 
 
-async def nnru():
+async def nnru(logger):
     prev_data = None
     while True:
         site_url = 'https://www.nn.ru/text/'
@@ -94,7 +63,7 @@ async def nnru():
 
                 url = 'https://www.nn.ru/' + article.a['href']
                 img = get_after_find(article, 'img', 'src')
-
+                img = base64.b64encode(requests.get(img).content).decode('utf-8')
                 response = requests.get(url)
                 news_data = BeautifulSoup(response.text, 'html.parser')
                 text = title
@@ -104,12 +73,12 @@ async def nnru():
                     return
 
                 post = await SummarizeAiFunc(text)
-                await send_json(img, post, url)
+                await send_json(img, post, url,logger)
                 prev_data = data
                 time.sleep(600)
 
 
-async def rbc():
+async def rbc(logger):
     prev_data = None
     while True:
         site_url = 'https://nn.rbc.ru/nn/'
@@ -120,7 +89,7 @@ async def rbc():
 
                 url = article.find('a', {'class': 'item__link rm-cm-item-link js-rm-central-column-item-link'}).get('href')
                 img = get_after_find(article, 'img', 'src')
-
+                img = base64.b64encode(requests.get(img).content).decode('utf-8')
                 response = requests.get(url)
                 news_data = BeautifulSoup(response.text, 'html.parser')
                 text = ""
@@ -129,13 +98,13 @@ async def rbc():
                 if text == "":
                     return
                 post = await SummarizeAiFunc(text)
-                await send_json(img, post, url)
+                await send_json(img, post, url,logger)
                 prev_data = data
                 time.sleep(600)
 
 
-def run():
-    print("NN.RU:\n")
-    asyncio.run(nnru())
+def run_news():
+    #print("NN.RU:\n")
+    #asyncio.run(nnru())
     print("RBC:\n")
     asyncio.run(rbc())
