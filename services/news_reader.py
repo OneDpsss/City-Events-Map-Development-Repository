@@ -21,10 +21,11 @@ def get_after_find(article, par1, par2):
     else:
         return None
 
-#add existence checker and delete news after 7 days
+
+# add existence checker and delete news after 7 days
 
 
-async def send_json(img, post, url):
+async def send_json(img, post, url, logger):
     try:
         data = json.loads(post)
     except json.JSONDecoder as e:
@@ -40,15 +41,15 @@ async def send_json(img, post, url):
         image_data = file.read()
         img = base64.b64encode(image_data).decode('utf-8')
     data['img'] = img
-    response_to_server(data)
+    logger.info(f"{json.dumps(data["url"])}")
+    response_to_server_news(data)
 
 
-async def nnru():
+async def nnru(logger):
     print("NN.RU:")
-    prev_data = None
     site_url = 'https://www.nn.ru/text/'
     data = check_response(site_url)
-    if not (data is None or prev_data == data):
+    if not (data is None):
         for article in data.find_all('article', class_='OPHIx')[:news_limit]:
             try:
                 rubrics = article.find_all(attrs={"slot": "rubrics"})
@@ -76,27 +77,26 @@ async def nnru():
                     return
 
                 post = await SummarizeAiFunc(text)
-                await send_json(img, post, url)
+                await send_json(img, post, url, logger)
 
             except AttributeError as e:
                 print("Error occurred while  NN RU")
-        prev_data = data
         time.sleep(600)
 
 
-async def rbc():
+async def rbc(logger):
     print("RBC:")
-    prev_data = None
     site_url = 'https://nn.rbc.ru/nn/'
     data = check_response(site_url)
-    if not (data is None or prev_data == data):
+    if not (data is None):
         try:
-            for article in data.find_all('div', {'class': 'item js-rm-central-column-item item_image-mob js-category-item'})[
+            for article in data.find_all('div',
+                                         {'class': 'item js-rm-central-column-item item_image-mob js-category-item'})[
                            :news_limit]:
 
-                url = article.find('a', {'class': 'item__link rm-cm-item-link js-rm-central-column-item-link'}).get('href')
+                url = article.find('a', {'class': 'item__link rm-cm-item-link js-rm-central-column-item-link'}).get(
+                    'href')
                 img = get_after_find(article, 'img', 'src')
-                img = base64.b64encode(requests.get(img).content).decode('utf-8')
                 response = requests.get(url)
                 news_data = BeautifulSoup(response.text, 'html.parser')
                 text = ""
@@ -105,13 +105,7 @@ async def rbc():
                 if text == "":
                     return
                 post = await SummarizeAiFunc(text)
-                await send_json(img, post, url)
-                prev_data = data
+                await send_json(img, post, url, logger)
         except AttributeError as e:
             print("Error occurred while parsing RBC")
         time.sleep(600)
-
-
-def run_news():
-    asyncio.run(nnru())
-    asyncio.run(rbc())
