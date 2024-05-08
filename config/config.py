@@ -1,8 +1,8 @@
-api_id = 
+api_id = 0
 api_hash = ""
 SHUTTLE_KEY = ""
 bot_token = ""
-my_chat_id = 
+my_chat_id = 0
 
 
 prompt = """{ in JSON format in Russian language "title": "Describe the event title, focusing on key aspects and 
