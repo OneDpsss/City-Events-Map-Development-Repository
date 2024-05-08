@@ -2,6 +2,7 @@ import requests
 from shuttleai import ShuttleAsyncClient
 from requests.auth import HTTPBasicAuth
 from config.config import SHUTTLE_KEY, prompt
+from PIL import Image
 from io import BytesIO
 from bs4 import BeautifulSoup
 
@@ -30,29 +31,7 @@ def filter_func(string):
         "показ",
         "бесплат",
         "кешбек",
-        " мы ",
-        "опрос",
-        "мнен",
-        "рейтинг",
-        "акция",
-        "скидк",
-        "подпис",
-        "рассылк",
-        "конкурс",
-        "анализ",
-        "стать",
-        "комментари",
-        "опубликова",
-        "обзор",
-        "обсужден",
-        "исследован",
-        "интервью",
-        "видеообзор",
-        "объявлен",
-        "эксперт",
-        "взгляд",
-        "промо",
-        "партнер"
+        " мы "
     ]
     for word in words:
         for key in key_words:
@@ -79,9 +58,21 @@ def check_response(url):
         return None
 
 
-auth = HTTPBasicAuth('', '')
+def download_image(url, save_path):
+    response = requests.get(url)
+    if response.status_code == 200:
+        image_content = response.content
+        image = Image.open(BytesIO(image_content))
+        image.save(save_path)
+        return image
+    else:
+        print("Error downloading image")
+        return None
 
+
+auth = HTTPBasicAuth('admin', '9x#?XgjE1@@W')
 
 def response_to_server(post):
     response_post = requests.post(url='https://api.in-map.ru/api/news/', json=post, auth=auth)
     print("POST-запрос:", response_post.status_code)
+
