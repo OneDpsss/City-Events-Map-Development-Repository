@@ -70,7 +70,7 @@ def download_image(url, save_path):
         return None
 
 
-auth = HTTPBasicAuth('admin', '9x#?XgjE1@@W')
+auth = HTTPBasicAuth('', '')
 
 def response_to_server(post):
     response_post = requests.post(url='https://api.in-map.ru/api/news/', json=post, auth=auth)
