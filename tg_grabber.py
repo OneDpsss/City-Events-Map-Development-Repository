@@ -2,7 +2,7 @@ import base64
 import json
 from datetime import datetime
 from telethon import TelegramClient, events
-from internal.function import response_to_server_news, filter_func, SummarizeAiFunc
+from internal.function import response_to_server, filter_func, SummarizeAiFunc
 
 
 async def telegram_grabber(session, api_id, api_hash, logger, loop=None, tg_channels=None, ):
@@ -29,7 +29,7 @@ async def telegram_grabber(session, api_id, api_hash, logger, loop=None, tg_chan
         # Обработка полученной суммаризации
         data = json.loads(post)
         data['url'] = message_link
-        data['img'] = ""
+        data['img'] = None
 
         # Установка даты публикации
         time = datetime.now().strftime("%Y-%m-%d")
@@ -49,7 +49,7 @@ async def telegram_grabber(session, api_id, api_hash, logger, loop=None, tg_chan
         # Отправка данных на сервер
         logger.info(f"{json.dumps(data["url"])}")
         print(data["title"])
-        response_to_server_news(data)
+        response_to_server(data)
         # send_message_func(data)
 
     # Запуск клиента Telegram

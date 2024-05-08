@@ -18,7 +18,7 @@ async def SummarizeAiFunc(input_text):
             plain=False,
             internet=False,
             max_tokens=100,
-            temperature=0.3,
+            temperature=0.1,
         )
         return response.choices[0].message.content
 
