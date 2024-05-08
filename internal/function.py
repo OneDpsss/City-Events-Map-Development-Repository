@@ -1,6 +1,8 @@
 import requests
 from shuttleai import ShuttleAsyncClient
 from requests.auth import HTTPBasicAuth
+from urllib3.util import url
+from PIL import Image
 from config.config import SHUTTLE_KEY, prompt
 from io import BytesIO
 from bs4 import BeautifulSoup
@@ -16,7 +18,7 @@ async def SummarizeAiFunc(input_text):
             plain=False,
             internet=False,
             max_tokens=100,
-            temperature=0.1,
+            temperature=0.3,
         )
         return response.choices[0].message.content
 
@@ -70,6 +72,18 @@ def get_after_find(article, par1, par2):
         return None
 
 
+def download_image(url, save_path):
+    response = requests.get(url)
+    if response.status_code == 200:
+        image_content = response.content
+        image = Image.open(BytesIO(image_content))
+        image.save(save_path)
+        return image
+    else:
+        print("Error downloading image")
+        return None
+
+
 def check_response(url):
     response = requests.get(url)
     if response.status_code == 200:
@@ -83,6 +97,11 @@ def check_response(url):
 auth = HTTPBasicAuth('admin', '9x#?XgjE1@@W')
 
 
-def response_to_server(post):
+def response_to_server_event(post):
+    response_post = requests.post(url="https://api.in-map.ru/api/event/", auth=auth, json=post)
+    print("POST-запрос:", response_post.status_code)
+
+
+def response_to_server_news(post):
     response_post = requests.post(url='https://api.in-map.ru/api/news/', json=post, auth=auth)
     print("POST-запрос:", response_post.status_code)
