@@ -24,7 +24,7 @@ async def main():
 
     # Собираем задачи для одновременного выполнения
     await asyncio.gather(
-       # nnru(logger),
+        #nnru(),
         # nnru(),  # Загрузка новостей с nn.ru
         telegram_grabber(session, api_id, api_hash, logger, loop=loop, tg_channels=tg_channels),
         # Загрузка сообщений из каналов Telegram

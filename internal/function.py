@@ -7,6 +7,7 @@ from bs4 import BeautifulSoup
 
 
 async def SummarizeAiFunc(input_text):
+    print(input_text)
     async with ShuttleAsyncClient(SHUTTLE_KEY, timeout=60) as shuttle:
         response = await shuttle.chat_completion(
             model="gpt-3.5-turbo",
@@ -15,7 +16,7 @@ async def SummarizeAiFunc(input_text):
             plain=False,
             internet=False,
             max_tokens=100,
-            temperature=0.5,
+            temperature=0.1,
         )
         return response.choices[0].message.content
 
@@ -30,7 +31,29 @@ def filter_func(string):
         "показ",
         "бесплат",
         "кешбек",
-        " мы "
+        " мы ",
+        "опрос",
+        "мнен",
+        "рейтинг",
+        "акция",
+        "скидк",
+        "подпис",
+        "рассылк",
+        "конкурс",
+        "анализ",
+        "стать",
+        "комментари",
+        "опубликова",
+        "обзор",
+        "обсужден",
+        "исследован",
+        "интервью",
+        "видеообзор",
+        "объявлен",
+        "эксперт",
+        "взгляд",
+        "промо",
+        "партнер"
     ]
     for word in words:
         for key in key_words:
@@ -57,7 +80,7 @@ def check_response(url):
         return None
 
 
-auth = HTTPBasicAuth('admin', 'admin')
+auth = HTTPBasicAuth('admin', '9x#?XgjE1@@W')
 
 
 def response_to_server(post):

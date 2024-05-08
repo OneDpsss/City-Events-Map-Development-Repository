@@ -5,7 +5,7 @@ from telethon import TelegramClient, events
 from internal.function import response_to_server, filter_func, SummarizeAiFunc
 
 
-async def telegram_grabber(session, api_id, api_hash,logger, loop=None, tg_channels=None,):
+async def telegram_grabber(session, api_id, api_hash, logger, loop=None, tg_channels=None, ):
     # Инициализация клиента Telegram
     client = TelegramClient(session, api_id, api_hash, system_version="4.16.30-vxCUSTOM", loop=loop)
     await client.start()
@@ -16,7 +16,7 @@ async def telegram_grabber(session, api_id, api_hash,logger, loop=None, tg_chann
         new_text = event.raw_text.replace("\n", "")
         if not filter_func(new_text):
             print("Фильтрация не пройдена")
-            return
+
 
         # Создание ссылки на сообщение
         message_link = f"https://t.me/{event.chat.username}/{event.id}"

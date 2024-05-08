@@ -7,9 +7,9 @@
     <list default="true" id="8cd3873c-362f-40d1-a1f8-df06db1bf633" name="Changes" comment="commit">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/config/config.py" beforeDir="false" afterPath="$PROJECT_DIR$/config/config.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/sources/sources.py" beforeDir="false" afterPath="$PROJECT_DIR$/config/sources/sources.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/internal/function.py" beforeDir="false" afterPath="$PROJECT_DIR$/internal/function.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/event_reader.py" beforeDir="false" afterPath="$PROJECT_DIR$/services/event_reader.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/services/news_reader.py" beforeDir="false" afterPath="$PROJECT_DIR$/services/news_reader.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/services/tg_grabber.py" beforeDir="false" afterPath="$PROJECT_DIR$/services/tg_grabber.py" afterDir="false" />
     </list>
@@ -36,6 +36,7 @@
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
     &quot;Python.config.executor&quot;: &quot;Run&quot;,
+    &quot;Python.function.executor&quot;: &quot;Run&quot;,
     &quot;Python.main.executor&quot;: &quot;Run&quot;,
     &quot;Python.news_reader.executor&quot;: &quot;Run&quot;,
     &quot;Python.tg_grabber.executor&quot;: &quot;Run&quot;,
@@ -51,6 +52,36 @@
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
+  <component name="RunManager">
+    <configuration name="main" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="City-Events-Map-Development-Repository" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/main.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Python.main" />
+      </list>
+    </recent_temporary>
+  </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
@@ -74,7 +105,13 @@
       <workItem from="1714645771867" duration="629000" />
       <workItem from="1714646407704" duration="770000" />
       <workItem from="1714647186491" duration="2795000" />
-      <workItem from="1714650032878" duration="1969000" />
+      <workItem from="1714650032878" duration="3379000" />
+      <workItem from="1714653509644" duration="1207000" />
+      <workItem from="1714825441879" duration="1527000" />
+      <workItem from="1714845167017" duration="684000" />
+      <workItem from="1714993585798" duration="1252000" />
+      <workItem from="1715082673265" duration="3054000" />
+      <workItem from="1715188278353" duration="396000" />
     </task>
     <task id="LOCAL-00001" summary="commit">
       <option name="closed" value="true" />
@@ -84,7 +121,15 @@
       <option name="project" value="LOCAL" />
       <updated>1714649933409</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="commit">
+      <option name="closed" value="true" />
+      <created>1714652026947</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1714652026947</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -95,9 +140,10 @@
     <option name="LAST_COMMIT_MESSAGE" value="commit" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/City_Events_Map_Development_Repository$news_reader.coverage" NAME="news_reader Coverage Results" MODIFIED="1714649377717" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/services" />
-    <SUITE FILE_PATH="coverage/City_Events_Map_Development_Repository$main.coverage" NAME="main Coverage Results" MODIFIED="1714651799742" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/City_Events_Map_Development_Repository$config.coverage" NAME="config Coverage Results" MODIFIED="1714648523599" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/config" />
-    <SUITE FILE_PATH="coverage/City_Events_Map_Development_Repository$tg_grabber.coverage" NAME="tg_grabber Coverage Results" MODIFIED="1714651660755" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/services" />
+    <SUITE FILE_PATH="coverage/City_Events_Map_Development_Repository$news_reader.coverage" NAME="news_reader Coverage Results" MODIFIED="1714653714514" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/services" />
+    <SUITE FILE_PATH="coverage/City_Events_Map_Development_Repository$main.coverage" NAME="main Coverage Results" MODIFIED="1715085210364" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/City_Events_Map_Development_Repository$config.coverage" NAME="config Coverage Results" MODIFIED="1715083166384" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/config" />
+    <SUITE FILE_PATH="coverage/City_Events_Map_Development_Repository$tg_grabber.coverage" NAME="tg_grabber Coverage Results" MODIFIED="1714826216648" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/services" />
+    <SUITE FILE_PATH="coverage/City_Events_Map_Development_Repository$function.coverage" NAME="function Coverage Results" MODIFIED="1714826651767" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/internal" />
   </component>
 </project>
