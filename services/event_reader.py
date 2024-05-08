@@ -7,12 +7,15 @@ from datetime import datetime
 import time
 from dateutil import parser
 from internal.function import check_response, get_after_find
+import os
+from dotenv import load_dotenv
+load_dotenv()
 
 event_limit = 20
 
 
 # дата удаляется сразу после ивента
-auth = HTTPBasicAuth('', '')
+auth = HTTPBasicAuth(os.getenv('NAME'), os.getenv('PASSWORD'))
 
 
 async def send_json(title, date, address, url, img):

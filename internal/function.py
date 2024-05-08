@@ -5,8 +5,9 @@ from config.config import SHUTTLE_KEY, prompt
 from PIL import Image
 from io import BytesIO
 from bs4 import BeautifulSoup
-
-
+import os
+from dotenv import load_dotenv
+load_dotenv()
 async def SummarizeAiFunc(input_text):
     async with ShuttleAsyncClient(SHUTTLE_KEY, timeout=60) as shuttle:
         response = await shuttle.chat_completion(
@@ -70,7 +71,7 @@ def download_image(url, save_path):
         return None
 
 
-auth = HTTPBasicAuth('', '')
+auth = HTTPBasicAuth(os.getenv('NAME'), os.getenv('PASSWORD'))
 
 def response_to_server(post):
     response_post = requests.post(url='https://api.in-map.ru/api/news/', json=post, auth=auth)

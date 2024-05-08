@@ -1,9 +1,13 @@
-api_id = 0
-api_hash = ""
-SHUTTLE_KEY = ""
-bot_token = ""
-my_chat_id = 0
+import os
+from dotenv import load_dotenv
 
+load_dotenv()
+
+api_id = os.getenv('API_ID')
+api_hash = os.getenv('API_HASH')
+SHUTTLE_KEY = os.getenv('SHUTTLE_KEY')
+bot_token = os.getenv('BOT_TOKEN')
+my_chat_id = os.getenv('MY_CHAT_ID')
 
 prompt = """{ in JSON format in Russian language "title": "Describe the event title, focusing on key aspects and 
 excluding additional details.", "address": "Specify the event location in the following format: City (if possible), 
