@@ -14,7 +14,7 @@ ymaps.ready(function () {
     var geoObjects = [];
     var $ = jQuery.noConflict();
     var username = 'admin';
-    var password = 'admin';
+    var password = '9x#?XgjE1@@W';
 
 
     var newsList = document.createElement('div');
