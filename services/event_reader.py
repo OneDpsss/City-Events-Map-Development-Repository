@@ -12,7 +12,7 @@ event_limit = 20
 
 
 # дата удаляется сразу после ивента
-auth = HTTPBasicAuth('admin', '9x#?XgjE1@@W')
+auth = HTTPBasicAuth('', '')
 
 
 async def send_json(title, date, address, url, img):
