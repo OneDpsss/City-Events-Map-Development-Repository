@@ -24,29 +24,33 @@ def get_after_find(article, par1, par2):
 #add existence checker and delete news after 7 days
 
 
-async def send_json(img, post, url,logger):
+async def send_json(img, post, url):
     try:
         data = json.loads(post)
     except json.JSONDecoder as e:
         print("err")
         return
-    time = datetime.now().strftime("%Y-%m-%d")
+    time = datetime.now().strftime("%Y-%m-%d %H:%M")
     data['news_date'] = time
     data['url'] = url
+    time = datetime.now().strftime("%d-%m-%Y%H-%M-%S-%f")
+    path = f"images/img+{time}.jpg"
+    download_image(img, path)
+    with open(path, "rb") as file:
+        image_data = file.read()
+        img = base64.b64encode(image_data).decode('utf-8')
     data['img'] = img
-    data['news_date'] = time
-    logger.info(f"{data["url"]}")
     response_to_server(data)
 
 
-async def nnru(logger):
+async def nnru():
+    print("NN.RU:")
     prev_data = None
-    while True:
-        site_url = 'https://www.nn.ru/text/'
-        data = check_response(site_url)
-        if not (data is None or prev_data == data):
-            for article in data.find_all('article', class_='OPHIx')[:news_limit]:
-
+    site_url = 'https://www.nn.ru/text/'
+    data = check_response(site_url)
+    if not (data is None or prev_data == data):
+        for article in data.find_all('article', class_='OPHIx')[:news_limit]:
+            try:
                 rubrics = article.find_all(attrs={"slot": "rubrics"})
                 city_news = False
                 for r in rubrics:
@@ -63,7 +67,6 @@ async def nnru(logger):
 
                 url = 'https://www.nn.ru/' + article.a['href']
                 img = get_after_find(article, 'img', 'src')
-                img = base64.b64encode(requests.get(img).content).decode('utf-8')
                 response = requests.get(url)
                 news_data = BeautifulSoup(response.text, 'html.parser')
                 text = title
@@ -73,17 +76,21 @@ async def nnru(logger):
                     return
 
                 post = await SummarizeAiFunc(text)
-                await send_json(img, post, url,logger)
-                prev_data = data
-                time.sleep(600)
+                await send_json(img, post, url)
+
+            except AttributeError as e:
+                print("Error occurred while  NN RU")
+        prev_data = data
+        time.sleep(600)
 
 
-async def rbc(logger):
+async def rbc():
+    print("RBC:")
     prev_data = None
-    while True:
-        site_url = 'https://nn.rbc.ru/nn/'
-        data = check_response(site_url)
-        if not (data is None or prev_data == data):
+    site_url = 'https://nn.rbc.ru/nn/'
+    data = check_response(site_url)
+    if not (data is None or prev_data == data):
+        try:
             for article in data.find_all('div', {'class': 'item js-rm-central-column-item item_image-mob js-category-item'})[
                            :news_limit]:
 
@@ -98,13 +105,13 @@ async def rbc(logger):
                 if text == "":
                     return
                 post = await SummarizeAiFunc(text)
-                await send_json(img, post, url,logger)
+                await send_json(img, post, url)
                 prev_data = data
-                time.sleep(600)
+        except AttributeError as e:
+            print("Error occurred while parsing RBC")
+        time.sleep(600)
 
 
 def run_news():
-    #print("NN.RU:\n")
-    #asyncio.run(nnru())
-    print("RBC:\n")
+    asyncio.run(nnru())
     asyncio.run(rbc())
