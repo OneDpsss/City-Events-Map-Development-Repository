@@ -10,6 +10,11 @@ class NewsView(APIView):
     def post(self, request):
         serializer = NewsSerializer(data=request.data)
         if serializer.is_valid():
+            data = request.data
+            url = data.get('url')
+            news_exists = News.objects.filter(url=url).exists()
+            if news_exists:
+                return Response({"message": "News already exists."}, status=status.HTTP_200_OK)
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
