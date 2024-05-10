@@ -1,24 +1,21 @@
 import asyncio
 import base64
 import requests
-from requests.auth import HTTPBasicAuth
 import json
-from datetime import datetime
-import time
 from dateutil import parser
 from internal.function import check_response, get_after_find, response_to_server_news
 
 event_limit = 20
 
 
-async def send_json(title, date, address, url, img,logger):
+async def send_json(title, date, address, url, img, logger):
     data = {}
     data['title'] = title
     data['event_date'] = date
     data['address'] = address
     data['url'] = url
     data['img'] = img
-    logger.info(f"{json.dumps(data["url"])}")
+    logger.info(f"{json.dumps(data['url'])}")
     print(data["title"])
     response_to_server_news(data)
 
@@ -42,7 +39,7 @@ async def kassir(logger):
                     'class': 'recommendation-item_venue compilation-tile__venue hover:underline'}).get_text()
                 date = get_after_find(event, 'time', 'datetime')
                 date = parser.parse(date).strftime("%Y-%m-%d %H:%M")
-                await send_json(title, date, address, url, img,logger)
+                await send_json(title, date, address, url, img, logger)
             except AttributeError as e:
                 print("Error occurred while parsing event")
 

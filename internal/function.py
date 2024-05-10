@@ -1,7 +1,6 @@
 import requests
 from shuttleai import ShuttleAsyncClient
 from requests.auth import HTTPBasicAuth
-from urllib3.util import url
 from PIL import Image
 from config.config import SHUTTLE_KEY, prompt
 from io import BytesIO
@@ -10,6 +9,7 @@ import os
 from dotenv import load_dotenv
 
 load_dotenv()
+
 
 async def SummarizeAiFunc(input_text):
     print(input_text)

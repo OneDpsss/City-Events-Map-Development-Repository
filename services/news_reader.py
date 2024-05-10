@@ -1,10 +1,7 @@
-import asyncio
 import base64
 
 import json
 from datetime import datetime
-import time
-from bs4 import BeautifulSoup
 from internal.function import *
 
 import os
@@ -41,7 +38,7 @@ async def send_json(img, post, url, logger):
         image_data = file.read()
         img = base64.b64encode(image_data).decode('utf-8')
     data['img'] = img
-    logger.info(f"{json.dumps(data["url"])}")
+    logger.info(f"{json.dumps(data['url'])}")
     response_to_server_news(data)
 
 
@@ -81,7 +78,7 @@ async def nnru(logger):
 
             except AttributeError as e:
                 print("Error occurred while  NN RU")
-       # time.sleep(600)
+    # time.sleep(600)
 
 
 async def rbc(logger):
@@ -108,4 +105,4 @@ async def rbc(logger):
                 await send_json(img, post, url, logger)
         except AttributeError as e:
             print("Error occurred while parsing RBC")
-       # time.sleep(600)
+    # time.sleep(600)

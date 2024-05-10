@@ -17,7 +17,6 @@ async def telegram_grabber(session, api_id, api_hash, logger, loop=None, tg_chan
         if not filter_func(new_text):
             print("Фильтрация не пройдена")
 
-
         # Создание ссылки на сообщение
         message_link = f"https://t.me/{event.chat.username}/{event.id}"
 
@@ -47,7 +46,7 @@ async def telegram_grabber(session, api_id, api_hash, logger, loop=None, tg_chan
         if data["priority"] == 0:
             return
         # Отправка данных на сервер
-        logger.info(f"{json.dumps(data["url"])}")
+        logger.info(f"{json.dumps(data['url'])}")
         print(data["title"])
         response_to_server_news(data)
         # send_message_func(data)

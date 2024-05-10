@@ -7,8 +7,9 @@ from config.sources.sources import tg_channels
 from services.event_reader import kassir
 from services.news_reader import nnru, rbc
 from services.tg_grabber import telegram_grabber
+
 # Настройка логгера
-logging.basicConfig(level=logging.INFO, filename="py_log.log",filemode="w",
+logging.basicConfig(level=logging.INFO, filename="py_log.log", filemode="w",
                     format="%(asctime)s %(levelname)s %(message)s")
 logger = logging.getLogger("myGrab")
 
@@ -30,11 +31,9 @@ async def main():
         # Загрузка сообщений из каналов Telegram
         rbc(logger),
         # Загрузка новостей с rbc.ru
-       #` kassir(logger)
+        # ` kassir(logger)
         # Загрузка событиый с kassir.ru
     )
-
-
 
 
 # Запуск основной функции

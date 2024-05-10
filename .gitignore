@@ -139,3 +139,5 @@ media/
 
 */migrations/*
 !*/migrations/__init__.py
+*.session
+*.json
