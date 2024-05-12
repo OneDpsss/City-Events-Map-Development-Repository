@@ -12,9 +12,15 @@ body, html {
     width: 100%;
     background-color: rgba(0,0,0,0.4);
     text-align: center;
-    padding: 10px;
-    color: white;
-    z-index: 1000;
+    padding-left: 10px;
+    height : 40px;
+    background : #fe6d64;
+    color :#fff;
+    z-index : 2;
+    font-size: 30px; 
+    display: flex; 
+    align-items: center; 
+    justify-content: space-between;
 }
 
 header h1 {
@@ -58,3 +64,5 @@ header h1 {
     display: none;
     overflow-y: auto;
 }
+
+
