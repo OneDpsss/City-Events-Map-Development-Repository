@@ -14,6 +14,10 @@ async def telegram_grabber(session, api_id, api_hash, logger, loop=None, tg_chan
     @client.on(events.NewMessage(chats=tg_channels))
     async def check_events(event):
         new_text = event.raw_text.replace("\n", "")
+        if new_text == "":
+            logger.info(f"Empty text: {event.raw_text}");
+            return
+
         if not filter_func(new_text):
             print("Фильтрация не пройдена")
 
@@ -26,7 +30,11 @@ async def telegram_grabber(session, api_id, api_hash, logger, loop=None, tg_chan
             return
 
         # Обработка полученной суммаризации
-        data = json.loads(post)
+        try:
+            data = json.loads(post)
+        except json.JSONDecodeError as e:
+            print("err")
+            return
         data['url'] = message_link
         data['img'] = ""
 
@@ -53,3 +61,6 @@ async def telegram_grabber(session, api_id, api_hash, logger, loop=None, tg_chan
 
     # Запуск клиента Telegram
     await client.run_until_disconnected()
+
+
+# сделать функиию для эвентов

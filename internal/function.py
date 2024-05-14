@@ -58,7 +58,10 @@ def filter_func(string):
         "эксперт",
         "взгляд",
         "промо",
-        "партнер"
+        "партнер",
+        "афиша",
+        "посте",
+        "этом"
     ]
     for word in words:
         for key in key_words:
