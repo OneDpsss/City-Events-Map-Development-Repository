@@ -56,14 +56,14 @@ header.appendChild(imagesContainer); // Добавляем контейнер в
 
 // Создаем первое изображение
 var img1 = document.createElement('img');
-img1.src = 'img/title.png'; // URL изображения
+img1.src = 'static/img/title.png'; // URL изображения
 img1.style.height = '30px'; // Высота изображения
 img1.style.width = 'auto'; // Ширина изображения
 imagesContainer.appendChild(img1); // Добавляем изображение в контейнер
 
 // Создаем второе изображение
 var img2 = document.createElement('img');
-img2.src = 'img/title2.png'; // URL изображения
+img2.src = 'static/img/title2.png'; // URL изображения
 img2.style.height = '30px'; // Высота изображения
 img2.style.width = 'auto'; // Ширина изображения
 imagesContainer.appendChild(img2); // Добавляем изображение в контейнер
