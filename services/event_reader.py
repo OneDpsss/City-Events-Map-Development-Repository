@@ -37,6 +37,7 @@ async def kassir(logger):
                 title = event.find('h2').get_text()
                 address = event.find('a', {
                     'class': 'recommendation-item_venue compilation-tile__venue hover:underline'}).get_text()
+                address = address + ", Нижний Новгород"
                 date = get_after_find(event, 'time', 'datetime')
                 date = parser.parse(date).strftime("%Y-%m-%d %H:%M")
                 await send_json(title, date, address, url, img, logger)
