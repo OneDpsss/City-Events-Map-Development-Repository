@@ -9,12 +9,7 @@ event_limit = 20
 
 
 async def send_json(title, date, address, url, img, logger):
-    data = {}
-    data['title'] = title
-    data['event_date'] = date
-    data['address'] = address
-    data['url'] = url
-    data['img'] = img
+    data = {'title': title, 'event_date': date, 'address': address, 'url': url, 'img': img}
     logger.info(f"{json.dumps(data['url'])}")
     print(data["title"])
     response_to_server_news(data)
