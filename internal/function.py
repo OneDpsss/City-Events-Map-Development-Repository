@@ -1,3 +1,5 @@
+from datetime import time
+
 import requests
 from shuttleai import ShuttleAsyncClient
 from requests.auth import HTTPBasicAuth
@@ -12,7 +14,6 @@ load_dotenv()
 
 
 async def SummarizeAiFunc(input_text):
-    print(input_text)
     async with ShuttleAsyncClient(SHUTTLE_KEY, timeout=60) as shuttle:
         response = await shuttle.chat_completion(
             model="gpt-3.5-turbo",
@@ -21,9 +22,9 @@ async def SummarizeAiFunc(input_text):
             plain=False,
             internet=False,
             max_tokens=100,
-            temperature=0.1,
+            temperature=0,
         )
-        return response.choices[0].message.content
+        return response['choices'][0]['message']['content']
 
 
 def filter_func(string):
@@ -104,10 +105,42 @@ auth = HTTPBasicAuth(os.getenv('NAME'), os.getenv('PASSWORD'))
 
 
 def response_to_server_event(post):
-    response_post = requests.post(url="https://api.in-map.ru/api/event/", auth=auth, json=post)
-    print("POST-запрос:", response_post.status_code)
+    url = "https://api.in-map.ru/api/event/"
+    max_retries = 3
+    for attempt in range(max_retries):
+        try:
+            response_post = requests.post(url, auth=auth, json=post, timeout=10)
+            response_post.raise_for_status()
+            print("POST-запрос:", response_post.status_code)
+            return
+        except requests.exceptions.HTTPError as errh:
+            print("HTTP Error:", errh)
+        except requests.exceptions.ConnectionError as errc:
+            print("Error Connecting:", errc)
+        except requests.exceptions.Timeout as errt:
+            print("Timeout Error:", errt)
+        except requests.exceptions.RequestException as err:
+            print("Other Error:", err)
+        if attempt < max_retries - 1:
+            time.sleep(5)
 
 
 def response_to_server_news(post):
-    response_post = requests.post(url='https://api.in-map.ru/api/news/', json=post, auth=auth)
-    print("POST-запрос:", response_post.status_code)
+    url = "https://api.in-map.ru/api/news/"
+    max_retries = 3
+    for attempt in range(max_retries):
+        try:
+            response_post = requests.post(url, auth=auth, json=post, timeout=10)
+            response_post.raise_for_status()
+            print("POST-запрос:", response_post.status_code)
+            return
+        except requests.exceptions.HTTPError as errh:
+            print("HTTP Error:", errh)
+        except requests.exceptions.ConnectionError as errc:
+            print("Error Connecting:", errc)
+        except requests.exceptions.Timeout as errt:
+            print("Timeout Error:", errt)
+        except requests.exceptions.RequestException as err:
+            print("Other Error:", err)
+        if attempt < max_retries - 1:
+            time.sleep(5)
