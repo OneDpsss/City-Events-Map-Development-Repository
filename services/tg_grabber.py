@@ -1,6 +1,7 @@
 import asyncio
 import base64
 import json
+import time
 from datetime import datetime
 from telethon import TelegramClient, events
 from internal.function import response_to_server_news, filter_func, SummarizeAiFunc

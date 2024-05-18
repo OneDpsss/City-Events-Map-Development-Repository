@@ -1,9 +1,11 @@
 import asyncio
 import base64
+import time
+
 import requests
 import json
 from dateutil import parser
-from internal.function import check_response, get_after_find, response_to_server_news
+from internal.function import check_response, get_after_find, response_to_server_event
 
 event_limit = 20
 
@@ -12,7 +14,7 @@ async def send_json(title, date, address, url, img, logger):
     data = {'title': title, 'event_date': date, 'address': address, 'url': url, 'img': img}
     logger.info(f"{json.dumps(data['url'])}")
     print(data["title"])
-    response_to_server_news(data)
+    response_to_server_event(data)
 
 
 async def kassir(logger):
@@ -38,6 +40,7 @@ async def kassir(logger):
                 await send_json(title, date, address, url, img, logger)
             except AttributeError as e:
                 print("Error occurred while parsing event")
+            await asyncio.sleep(10)
 
 
 def run_events():

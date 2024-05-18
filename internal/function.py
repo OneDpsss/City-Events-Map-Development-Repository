@@ -1,5 +1,5 @@
 from datetime import time
-
+import time
 import requests
 from shuttleai import ShuttleAsyncClient
 from requests.auth import HTTPBasicAuth
@@ -105,7 +105,7 @@ auth = HTTPBasicAuth(os.getenv('NAME'), os.getenv('PASSWORD'))
 
 
 def response_to_server_event(post):
-    url = "https://api.in-map.ru/api/event/"
+    url = "https://api.in-map.ru/api/events/"
     max_retries = 3
     for attempt in range(max_retries):
         try:

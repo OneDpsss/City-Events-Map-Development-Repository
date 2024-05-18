@@ -1,6 +1,8 @@
+import asyncio
 import base64
 
 import json
+import time
 from datetime import datetime
 from internal.function import *
 
@@ -75,10 +77,9 @@ async def nnru(logger):
 
                 post = await SummarizeAiFunc(text)
                 await send_json(img, post, url, logger)
-
             except AttributeError as e:
                 print("Error occurred while  NN RU")
-    # time.sleep(600)
+            time.sleep(60)
 
 
 async def rbc(logger):
@@ -103,6 +104,6 @@ async def rbc(logger):
                     return
                 post = await SummarizeAiFunc(text)
                 await send_json(img, post, url, logger)
+                await asyncio.sleep(10)
         except AttributeError as e:
-            print("Error occurred while parsing RBC")
-    # time.sleep(600)
+            print("Error occurred while parsing RBC",e)
