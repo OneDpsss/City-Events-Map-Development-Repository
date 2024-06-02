@@ -1,7 +1,7 @@
 from django.core.management.base import BaseCommand
 from datetime import timedelta
 from django.utils import timezone
-from server.api.models import News, Events
+from api.models import News, Events
 
 
 class Command(BaseCommand):
