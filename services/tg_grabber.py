@@ -71,5 +71,3 @@ async def telegram_grabber(session, api_id, api_hash, logger, loop=None, tg_chan
             logger.info("Перезапуск telegram_grabber через 10 секунд...")
             await asyncio.sleep(10)
 
-
-# сделать функиию для эвентов
