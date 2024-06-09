@@ -26,9 +26,9 @@ async def safe_execute(task, task_name, semaphore):
 async def main():
     semaphore = asyncio.Semaphore(5)
     tasks = [
-        safe_execute(nnru(logger), "nnru", semaphore),
-        safe_execute(rbc(logger), "rbc", semaphore),
-        safe_execute(kassir(logger), "kassir", semaphore)
+        asyncio.create_task(safe_execute(nnru(logger), "nnru", semaphore)),
+        asyncio.create_task(safe_execute(rbc(logger), "rbc", semaphore)),
+      #  asyncio.create_task(safe_execute(kassir(logger), "kassir", semaphore))
     ]
 
     await asyncio.gather(*tasks)
