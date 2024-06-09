@@ -10,7 +10,7 @@ import os
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "Django_config.settings")
 
-news_limit = 2
+news_limit = 5
 
 
 def get_after_find(article, par1, par2):

@@ -4,7 +4,7 @@ import datetime
 import threading
 import time
 from config.config import api_id, api_hash
-from config.sources.sources import tg_channels
+from config.sources import tg_channels
 from services.event_reader import kassir
 from services.news_reader import nnru, rbc
 from services.tg_grabber import telegram_grabber

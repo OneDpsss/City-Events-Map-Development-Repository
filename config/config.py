@@ -22,5 +22,5 @@ interest to specific circles of people or useful only to a small portion of the 
 local organizations or companies. Minor changes in the city environment, such as opening or closing small 
 businesses.", 0 - "Minimal importance: Events unlikely to attract the attention of the majority of city residents. 
 Personal announcements, advertisements, or events affecting only individuals or small groups." } } In Russian 
-Language"""
+Language,only ready-to-send json"""
 
