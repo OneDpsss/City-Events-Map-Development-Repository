@@ -131,15 +131,14 @@ window.showFullNews = function(index) {
     var geoObject = geoObjects[index];
     var newsData = geoObject.properties.get('newsData');
     if (!newsData || !newsData.title || !newsData.address) {
-        
         console.error('News data or its properties are undefined.');
-        
         return;
     }
-var newsDate = new Date(newsData.news_date); 
-var formattedNewsDate = newsDate.toLocaleString('ru-RU', {day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit'});
 
-var fullNewsContent = '<div style="display: flex; justify-content: space-between; align-items: center;">' + 
+    var newsDate = new Date(newsData.news_date); 
+    var formattedNewsDate = newsDate.toLocaleString('ru-RU', {day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit'});
+
+    var fullNewsContent = '<div style="display: flex; justify-content: space-between; align-items: center;">' + 
                                 '<p></p>' + 
                                 '<img src="data:image/svg+xml;utf8,<svg xmlns=\%22http://www.w3.org/2000/svg\%22 width=\%2224\%22 height=\%2224\%22 viewBox=\%220 0 24 24\%22 fill=\%22none\%22 stroke=\%22%23000000\%22 stroke-width=\%222\%22 stroke-linecap=\%22round\%22 stroke-linejoin=\%22round\%22><line x1=\%2218\%22 y1=\%226\%22 x2=\%226\%22 y2=\%2218\%22/><line x1=\%226\%22 y1=\%226\%22 x2=\%2218\%22 y2=\%2218\%22/></svg>" style="cursor: pointer;" onclick="hideFullNews()">' +
                               '</div>' + '<h4>' + newsData.title + '</h4>'+ 
@@ -160,46 +159,36 @@ var fullNewsContent = '<div style="display: flex; justify-content: space-between
     fullNewsModal.querySelector('.modal-content').innerHTML = fullNewsContent;
     fullNewsModal.style.display = 'block';
 
-    var img = document.getElementById('news-image');
+
     
 };
 
 
 
-
-// Создаем контейнер для списка новостей
 var newsList = document.createElement('div');
 newsList.id = 'news-list';
 document.body.appendChild(newsList);
 
-// Создаем модальное окно для полного описания новости
 var fullNewsModal = document.createElement('div');
 fullNewsModal.id = 'full-news-modal';
 document.body.appendChild(fullNewsModal);
 
-// Создаем контейнер для содержимого модального окна
 var modalContent = document.createElement('div');
 modalContent.className = 'modal-content';
 fullNewsModal.appendChild(modalContent);
 
 window.hideFullNews = function() {
     fullNewsModal.style.display = 'none';
-
-    
-    
 };
 
 window.onclick = function(event) {
-  if (event.target == fullNewsModal && event.target != modalContent) {
-    fullNewsModal.style.display = 'none';
-  }
-
-};
-
-
-window.onclick = function(event) {
-    if (event.target == newsList) {
-        hideNewsList(); // Закрываем боковое окно при клике за его пределами
+    if (event.target == fullNewsModal && event.target != modalContent) {
+        fullNewsModal.style.display = 'none';
     }
 };
 
+window.onclick = function(event) {
+    if (event.target == newsList) {
+        hideNewsList(); 
+    }
+};
