@@ -160,7 +160,7 @@ var fullNewsContent = '<div style="display: flex; justify-content: space-between
     fullNewsModal.querySelector('.modal-content').innerHTML = fullNewsContent;
     fullNewsModal.style.display = 'block';
 
-    
+    var img = document.getElementById('news-image');
     
 };
 
