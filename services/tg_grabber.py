@@ -31,7 +31,7 @@ async def telegram_grabber(session, api_id, api_hash, logger, loop=None, tg_chan
 
                 # Суммаризация текста сообщения
                 post = await SummarizeAiFunc(new_text)
-                print(post)
+                #print(post)
                 if not post:
                     return
 
@@ -57,13 +57,12 @@ async def telegram_grabber(session, api_id, api_hash, logger, loop=None, tg_chan
                         image_data = file.read()
                         img = base64.b64encode(image_data).decode('utf-8')
                     data['img'] = img
-                if data['img'] == "a":
-                    print(data)
                 if data["priority"] == 0:
                     return
 
                 # Отправка данных на сервер
                 logger.info(f"{json.dumps(data['url'])}")
+                print(data['title'])
                 response_to_server_news(data)
 
             # Запуск клиента Telegram

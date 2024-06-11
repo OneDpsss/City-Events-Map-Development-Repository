@@ -40,6 +40,4 @@ async def kassir(logger):
             await asyncio.sleep(10)
 
 
-def run_events():
-    print("Kassir:\n")
-    asyncio.run(kassir())
+
