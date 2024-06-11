@@ -50,8 +50,8 @@ def run_main_periodically():
 
 
 # Запуск telegram_grabber в отдельном потоке
-telegram_thread = threading.Thread(target=run_telegram_grabber)
-telegram_thread.start()
+#telegram_thread = threading.Thread(target=run_telegram_grabber)
+#telegram_thread.start()
 
 # Запуск main периодически в основном потоке
 run_main_periodically()

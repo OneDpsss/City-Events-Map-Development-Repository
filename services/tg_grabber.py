@@ -45,8 +45,8 @@ async def telegram_grabber(session, api_id, api_hash, logger, loop=None, tg_chan
                 data['img'] = "a"
 
                 # Установка даты публикации
-                time = datetime.now().strftime("%Y-%m-%d")
-                data['news_date'] = time
+                time_str = datetime.now().strftime("%Y-%m-%d %H:%M")
+                data['news_date'] = time_str
 
                 # Обработка изображения, если оно есть
                 if event.message.photo:
